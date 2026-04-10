@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instalar RhinoPlan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0B1628;color:#C8DCF0;font-family:'DM Sans',sans-serif}
+a{text-decoration:none}
+.nav{background:#101E32;border-bottom:2px solid #5B8DB833;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#5B8DB8;display:flex;align-items:center;gap:6px}
+.btn{display:inline-block;padding:10px 24px;background:linear-gradient(135deg,#5B8DB8,#3A6B8E);color:#0B1628;font-weight:700;font-size:14px;border-radius:7px}
+.page{max-width:700px;margin:0 auto;padding:60px 24px 100px}
+.page h1{font-family:'Playfair Display',serif;font-size:32px;color:#F0F4F8;margin-bottom:12px}
+.sub{font-size:16px;color:#7A8FA6;margin-bottom:48px;line-height:1.6}
+.device{margin-bottom:48px}
+.device-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #5B8DB822}
+.device-icon{width:44px;height:44px;background:#5B8DB815;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.device-header h2{font-size:20px;font-weight:700;color:#F0F4F8}
+.steps{counter-reset:step}
+.step{display:flex;gap:16px;margin-bottom:20px}
+.step-num{counter-increment:step;flex-shrink:0;width:32px;height:32px;background:#5B8DB822;border:1.5px solid #5B8DB844;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#5B8DB8}
+.step-num::before{content:counter(step)}
+.step-content h3{font-size:15px;font-weight:600;color:#F0F4F8;margin-bottom:4px}
+.step-content p{font-size:14px;color:#7A8FA6;line-height:1.6}
+.key{display:inline-block;background:#1E2F45;border:1px solid #5B8DB833;border-radius:4px;padding:1px 8px;font-size:13px;color:#5B8DB8;font-weight:600}
+.note{background:#1E2F4588;border:1px solid #5B8DB822;border-radius:10px;padding:16px 20px;margin-top:12px}
+.note p{font-size:13px;color:#7A8FA6;line-height:1.6}
+.note strong{color:#C8DCF0}
+.back{display:inline-flex;align-items:center;gap:6px;color:#5B8DB8;font-size:14px;font-weight:500;margin-bottom:32px}
+.footer{padding:28px 24px;border-top:1px solid #5B8DB815;font-size:12px;color:#7A8FA6;text-align:center}
+</style>
+</head>
+<body>
+<div class="nav">
+  <a href="/" class="nav-logo">
+    <svg viewBox="-28 -42 56 72" width="22" height="28"><path d="M0,-38 L-10,4 L0,20 L10,4 Z" fill="#F5BE3A"/><path d="M0,-38 L10,4 L0,20 Z" fill="#EDAE2A"/><path d="M-10,4 L-24,18 L-12,26 L0,20" fill="#E8A825"/><path d="M10,4 L24,18 L12,26 L0,20" fill="#D49A18"/><path d="M0,-38 L-10,4 L-24,18 L-12,26 L0,20 L12,26 L24,18 L10,4 Z" fill="none" stroke="#C48B10" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    RhinoPlan
+  </a>
+  <a class="btn" href="https://rhinoplan.vercel.app">Abrir RhinoPlan</a>
+</div>
+<div class="page">
+  <a href="/" class="back">&#8592; Volver al inicio</a>
+  <h1>Instala RhinoPlan en tu dispositivo</h1>
+  <p class="sub">RhinoPlan funciona como una app nativa sin necesidad de descargarla desde una tienda. Sigue estos pasos.</p>
+
+  <div class="device">
+    <div class="device-header"><div class="device-icon">🍎</div><h2>iPad / iPhone (Safari)</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Abre RhinoPlan en Safari</h3><p>Ve a <span class="key">rhinoplan.vercel.app</span> usando Safari. Debe ser Safari, no Chrome ni otro navegador.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Toca el boton Compartir</h3><p>Toca el icono de compartir (el cuadrado con la flecha hacia arriba) en la barra inferior de Safari.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Selecciona "Agregar a pantalla de inicio"</h3><p>Desplazate en el menu y toca <span class="key">Agregar a pantalla de inicio</span>.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Confirma</h3><p>Toca <span class="key">Agregar</span>. RhinoPlan aparecera en tu pantalla de inicio con el icono dorado.</p></div></div>
+    </div>
+  </div>
+
+  <div class="device">
+    <div class="device-header"><div class="device-icon">🤖</div><h2>Android — Celular / Tablet (Chrome)</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Abre RhinoPlan en Chrome</h3><p>Ve a <span class="key">rhinoplan.vercel.app</span> usando Google Chrome.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Toca el menu &#8942;</h3><p>Toca los tres puntos verticales en la esquina superior derecha de Chrome.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Selecciona "Instalar app"</h3><p>O "Agregar a pantalla de inicio", segun tu version de Chrome. Ambas funcionan.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Confirma la instalacion</h3><p>Toca <span class="key">Instalar</span>. RhinoPlan aparecera como una app en tu pantalla de inicio.</p></div></div>
+    </div>
+  </div>
+
+  <div class="device">
+    <div class="device-header"><div class="device-icon">💻</div><h2>Computador (Chrome / Edge)</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Abre RhinoPlan en el navegador</h3><p>Ve a <span class="key">rhinoplan.vercel.app</span> en Chrome o Edge.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Haz clic en el icono de instalacion</h3><p>En la barra de direccion veras un icono de monitor con flecha. Haz clic en el.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>Confirma</h3><p>Haz clic en <span class="key">Instalar</span>. RhinoPlan se abrira como una ventana independiente.</p></div></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><strong>¿Por que no esta en el App Store o Google Play?</strong></p>
+    <p>RhinoPlan es una Progressive Web App (PWA). Funciona igual que una app nativa pero se instala directamente desde el navegador. Se actualiza automaticamente, no ocupa espacio significativo, y funciona en cualquier dispositivo.</p>
+  </div>
+</div>
+<div class="footer">© 2026 RhinoPlan. Todos los derechos reservados.</div>
+</body>
+</html>
