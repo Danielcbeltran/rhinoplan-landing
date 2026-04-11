@@ -115,6 +115,7 @@ function setLang(l){
   document.documentElement.lang=l;
   localStorage.setItem('rhinoplan-lang',l);
   document.getElementById('langSel').value=l;
+  document.querySelectorAll('a[href*="rhinoplan.vercel.app"]').forEach(a=>{const u=new URL(a.href);u.searchParams.set('lang',l);a.href=u.toString();});
 }
 
 document.getElementById('langSel').addEventListener('change',e=>setLang(e.target.value));
