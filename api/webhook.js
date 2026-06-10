@@ -118,8 +118,8 @@ export default async function handler(req, res) {
 
     const row = {
       status: newStatus,
-      lemon_customer_id: String(customerId || ''),
-      lemon_subscription_id: String(subscriptionId || ''),
+      provider_customer_id: String(customerId || ''),
+      provider_subscription_id: String(subscriptionId || ''),
       updated_at: new Date().toISOString(),
       ...(userId ? { user_id: userId } : {}),
       ...(email ? { email } : {}),
