@@ -22,6 +22,7 @@ const SUPA_URL = 'https://tzmbybwytfpaqaajwumz.supabase.co';
 
 // Orígenes permitidos para CORS (la app vive en otro dominio)
 const ALLOWED_ORIGINS = [
+  'https://app.rhinoplan.app',
   'https://rhinoplan.vercel.app',
   'https://rhinoplan.app',
   'https://www.rhinoplan.app',
@@ -74,7 +75,7 @@ export default async function handler(req, res) {
         request_id: `${user.id}-${Date.now()}`, // idempotencia
         customer: { email: user.email },
         metadata: { user_id: user.id },
-        success_url: 'https://rhinoplan.vercel.app/?upgrade=success',
+        success_url: 'https://app.rhinoplan.app/?upgrade=success',
       }),
     });
 
