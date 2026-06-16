@@ -89,7 +89,7 @@ a{text-decoration:none}
       <option value="it">Italiano</option>
       <option value="tr">Türkçe</option>
     </select>
-    <a class="btn" href="https://rhinoplan.vercel.app" data-i18n="startFree">Comenzar gratis →</a>
+    <a class="btn" href="https://app.rhinoplan.app" data-i18n="startFree">Comenzar gratis →</a>
   </div>
 </div>
 
@@ -99,7 +99,7 @@ a{text-decoration:none}
     <h1 data-i18n-html="heroTitle">Planifica cada rinoplastia con <em>precisión</em></h1>
     <p class="hero-desc" data-i18n="heroDesc">Anota, planifica y documenta procedimientos de rinoplastia con herramientas diseñadas específicamente para cirujanos. Disponible en 7 idiomas.</p>
     <div class="hero-buttons">
-      <a class="btn" href="https://rhinoplan.vercel.app" data-i18n="startFree">Comenzar gratis →</a>
+      <a class="btn" href="https://app.rhinoplan.app" data-i18n="startFree">Comenzar gratis →</a>
       <a class="btn-ghost" href="#funciones" data-i18n="seeFeatures">Ver funciones</a>
     </div>
   </div>
@@ -204,7 +204,7 @@ a{text-decoration:none}
         <li data-i18n="fl4">Exportación PDF</li>
         <li data-i18n="fl5">1 plantilla guardada</li>
       </ul>
-      <a class="btn-ghost" href="https://rhinoplan.vercel.app" style="width:100%;text-align:center;display:block;" data-i18n="startFreeShort">Comenzar gratis</a>
+      <a class="btn-ghost" href="https://app.rhinoplan.app" style="width:100%;text-align:center;display:block;" data-i18n="startFreeShort">Comenzar gratis</a>
     </div>
     <div class="pcard pro" data-badge="Recomendado">
       <div class="pcard-tier">Pro</div>
@@ -218,7 +218,7 @@ a{text-decoration:none}
         <li data-i18n="pl5">7 idiomas</li>
         <li data-i18n="pl6">Soporte prioritario</li>
       </ul>
-      <a class="btn" href="https://rhinoplan.vercel.app" style="width:100%;text-align:center;display:block;" data-i18n="startTrial">Comenzar prueba gratuita →</a>
+      <a class="btn" href="https://app.rhinoplan.app" style="width:100%;text-align:center;display:block;" data-i18n="startTrial">Comenzar prueba gratuita →</a>
     </div>
   </div>
 </div>
@@ -229,13 +229,13 @@ a{text-decoration:none}
   <div class="section-label" data-i18n="ctaLabel">¿Listo para empezar?</div>
   <div class="section-title" data-i18n="ctaTitle">Planifica tu próxima rinoplastia con precisión digital</div>
   <p class="section-desc" data-i18n="ctaDesc">Diseñado para cirujanos que documentan sus procedimientos de forma profesional.</p>
-  <a class="btn" href="https://rhinoplan.vercel.app" style="font-size:16px;padding:14px 36px;" data-i18n="ctaBtn">Crear cuenta gratis →</a>
+  <a class="btn" href="https://app.rhinoplan.app" style="font-size:16px;padding:14px 36px;" data-i18n="ctaBtn">Crear cuenta gratis →</a>
 </div>
 
 <div class="footer">
   <div style="max-width:760px;margin:0 auto 18px;font-size:12px;line-height:1.6;opacity:0.6;text-align:center;" data-i18n="medicalDisclaimer">RhinoPlan es una herramienta de planificación y documentación quirúrgica destinada a profesionales de la salud. Su contenido es únicamente de carácter informativo y de apoyo a la planificación; no constituye consejo médico, diagnóstico ni tratamiento, y no sustituye el juicio clínico del profesional.</div>
   <div>© 2026 RhinoPlan. <span data-i18n="rights">Todos los derechos reservados.</span></div>
-  <div style="display:flex;gap:20px;"><a href="/terms.html" data-i18n="terms">Términos</a><a href="/privacy.html" data-i18n="privacy">Privacidad</a><a href="/dpa.html" data-i18n="dpa">DPA</a><a onclick="window.location='mai'+'lto:'+'contact'+'@'+'rhinoplan.app'" href="#" data-i18n="contact">Contacto</a><a href="/install.html" data-i18n="howToInstall">Cómo instalar</a></div>
+  <div style="display:flex;gap:20px;"><a href="/terms.html" data-i18n="terms">Términos</a><a href="/privacy.html" data-i18n="privacy">Privacidad</a><a href="/dpa.html" data-i18n="dpa">DPA</a><a href="mailto:contact&#64;rhinoplan.app" data-i18n="contact">Contacto</a><a href="/install.html" data-i18n="howToInstall">Cómo instalar</a></div>
 </div>
 
 <script>
@@ -258,7 +258,7 @@ function setLang(l){
   document.documentElement.lang=l;
   localStorage.setItem('rhinoplan-lang',l);
   document.getElementById('langSel').value=l;
-  document.querySelectorAll('a[href*="rhinoplan.vercel.app"]').forEach(a=>{const u=new URL(a.href);u.searchParams.set('lang',l);a.href=u.toString();});
+  document.querySelectorAll('a[href*="app.rhinoplan.app"]').forEach(a=>{const u=new URL(a.href);u.searchParams.set('lang',l);a.href=u.toString();});
 }
 
 document.getElementById('langSel').addEventListener('change',e=>setLang(e.target.value));
