@@ -105,15 +105,10 @@ export default async function handler(req, res) {
 
     const newStatus = GRANT.includes(eventType) ? 'active' : 'inactive';
 
-    // 2) Buscar la fila a actualizar: primero por user_id, luego por email
-    let filter = null;
-    if (userId) {
-      const byUser = await supa(`subscriptions?user_id=eq.${encodeURIComponent(userId)}&select=id`);
-      if (byUser?.length) filter = `user_id=eq.${encodeURIComponent(userId)}`;
-    }
-    if (!filter && email) {
-      const byEmail = await supa(`subscriptions?email=eq.${encodeURIComponent(email)}&select=id`);
-      if (byEmail?.length) filter = `email=eq.${encodeURIComponent(email)}`;
+    // Sin identidad no podemos vincular de forma fiable.
+    if (!userId && !email) {
+      console.error('WEBHOOK: event without user_id or email — cannot link');
+      return res.status(200).json({ ok: false, error: 'No identity in payload' });
     }
 
     const row = {
@@ -125,25 +120,40 @@ export default async function handler(req, res) {
       ...(email ? { email } : {}),
     };
 
-    if (filter) {
-      await supa(`subscriptions?${filter}`, {
-        method: 'PATCH',
-        body: JSON.stringify(row),
-      });
-      console.log('WEBHOOK updated:', newStatus, filter);
-    } else if (newStatus === 'active') {
-      if (!userId && !email) {
-        console.error('WEBHOOK: grant event without user_id or email — cannot link');
-        return res.status(200).json({ ok: false, error: 'No identity in payload' });
-      }
-      await supa('subscriptions', {
+    // 2) UPSERT ATÓMICO sobre user_id.
+    // La tabla tiene UNIQUE(user_id); con resolution=merge-duplicates,
+    // si ya existe la fila se actualiza, si no se inserta — en una sola
+    // operación atómica. Esto evita los duplicados por eventos concurrentes
+    // (checkout.completed + subscription.active llegando a la vez).
+    if (userId) {
+      await supa('subscriptions?on_conflict=user_id', {
         method: 'POST',
+        headers: { Prefer: 'return=representation,resolution=merge-duplicates' },
         body: JSON.stringify(row),
       });
-      console.log('WEBHOOK created:', email || userId);
+      console.log('WEBHOOK upsert by user_id:', newStatus, userId);
     } else {
-      // Revoke para alguien sin fila: nada que hacer
-      console.log('WEBHOOK revoke with no matching row, skipping');
+      // Sin user_id (raro): caer a la lógica por email.
+      // Buscar fila existente por email y actualizar; si no existe y es
+      // un grant, insertar.
+      const byEmail = await supa(
+        `subscriptions?email=eq.${encodeURIComponent(email)}&select=id`
+      );
+      if (byEmail?.length) {
+        await supa(`subscriptions?email=eq.${encodeURIComponent(email)}`, {
+          method: 'PATCH',
+          body: JSON.stringify(row),
+        });
+        console.log('WEBHOOK updated by email:', newStatus, email);
+      } else if (newStatus === 'active') {
+        await supa('subscriptions', {
+          method: 'POST',
+          body: JSON.stringify(row),
+        });
+        console.log('WEBHOOK created by email:', email);
+      } else {
+        console.log('WEBHOOK revoke by email with no row, skipping');
+      }
     }
 
     return res.status(200).json({ ok: true, action: newStatus });
