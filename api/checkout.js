@@ -14,9 +14,19 @@ const CREEM_API = TEST_MODE
   ? 'https://test-api.creem.io/v1/checkouts'
   : 'https://api.creem.io/v1/checkouts';
 
-const PRODUCT_ID = TEST_MODE
-  ? 'prod_2eCcODskMCdbcSKMVc5LXP' // producto de test
-  : 'prod_77Edh860PtALnRskMGpnP'; // producto de producción
+// Un product_id por plan. El botón de la app manda { plan: 'pro' | 'plus' }.
+// Pegar el product_id de Plus cuando esté creado en Creem (ver PRODUCT_PLUS_PROD).
+const PRODUCT_PRO_TEST  = 'prod_2eCcODskMCdbcSKMVc5LXP';
+const PRODUCT_PRO_PROD  = 'prod_77Edh860PtALnRskMGpnP';
+const PRODUCT_PLUS_TEST = 'PEGAR_PRODUCT_ID_PLUS_TEST'; // opcional; solo si usas TEST_MODE=true
+const PRODUCT_PLUS_PROD = 'prod_1GhmbZie1e3Qw584kZa7gC'; // RhinoPlan Plus $49/mes
+
+// Devuelve el product_id correcto según plan y modo. Si el plan no se reconoce,
+// cae a Pro (comportamiento anterior), para no romper llamadas antiguas.
+function productIdFor(plan) {
+  if (plan === 'plus') return TEST_MODE ? PRODUCT_PLUS_TEST : PRODUCT_PLUS_PROD;
+  return TEST_MODE ? PRODUCT_PRO_TEST : PRODUCT_PRO_PROD;
+}
 
 const SUPA_URL = 'https://tzmbybwytfpaqaajwumz.supabase.co';
 
@@ -63,6 +73,18 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid user' });
     }
 
+    // 1b) Qué plan se está comprando. El body puede venir vacío (llamada
+    // antigua sin plan): en ese caso plan = undefined → productIdFor cae a Pro.
+    let plan;
+    try {
+      const body = typeof req.body === 'object' && req.body ? req.body : JSON.parse(req.body || '{}');
+      plan = body.plan;
+    } catch { plan = undefined; }
+    const productId = productIdFor(plan);
+    if (productId.startsWith('PEGAR_')) {
+      return res.status(400).json({ error: `Product for plan "${plan}" not configured yet` });
+    }
+
     // 2) Crear checkout session en Creem con la identidad del usuario
     const checkoutRes = await fetch(CREEM_API, {
       method: 'POST',
@@ -71,10 +93,12 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        product_id: PRODUCT_ID,
+        product_id: productId,
         request_id: `${user.id}-${Date.now()}`, // idempotencia
         customer: { email: user.email },
-        metadata: { user_id: user.id },
+        // El plan viaja en metadata para que el webhook sepa qué otorgar
+        // sin depender de mapear product_id → plan del lado del webhook.
+        metadata: { user_id: user.id, plan: plan === 'plus' ? 'plus' : 'pro' },
         success_url: 'https://app.rhinoplan.app/?upgrade=success',
       }),
     });

@@ -90,6 +90,9 @@ export default async function handler(req, res) {
     const metadata = obj?.metadata || subscription?.metadata || {};
     const email = (customer?.email || obj?.customer_email || '').toLowerCase();
     const userId = metadata?.user_id || null;
+    // Plan comprado, puesto por checkout.js en metadata. Si falta (evento
+    // antiguo o de otra fuente), se asume 'pro' para no romper nada.
+    const plan = metadata?.plan === 'plus' ? 'plus' : 'pro';
     const customerId = customer?.id || obj?.customer_id || '';
     const subscriptionId = subscription?.id || obj?.subscription_id || obj?.id || '';
 
@@ -116,6 +119,10 @@ export default async function handler(req, res) {
       provider_customer_id: String(customerId || ''),
       provider_subscription_id: String(subscriptionId || ''),
       updated_at: new Date().toISOString(),
+      // Solo fijamos `plan` al OTORGAR. Al revocar no lo tocamos: el status
+      // pasa a 'inactive' y eso ya corta el acceso; conservar el plan evita
+      // pisar, por ejemplo, una prueba de Plus todavía vigente.
+      ...(GRANT.includes(eventType) ? { plan } : {}),
       ...(userId ? { user_id: userId } : {}),
       ...(email ? { email } : {}),
     };
